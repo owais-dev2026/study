@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>study</title>
+<style>
+:root{--bg:#e9eff1;--card:#fff;--ink:#12303a;--mute:#5d7580;--line:#d3dee2;--main:#0f5b6b;--main2:#0b4552;--acc:#e0a030;--ok:#2e8b57;--onmain:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#0e1a1e;--card:#16262c;--ink:#e6f0f2;--mute:#8fa8b1;--line:#27404a;--main:#3fb0c4;--main2:#2f94a7;--acc:#f0b84a;--ok:#4cc38a;--onmain:#06242b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",system-ui,sans-serif;line-height:1.6}
+.wrap{max-width:960px;margin:0 auto;padding:20px 14px 40px;display:grid;gap:18px;grid-template-columns:1fr 1.2fr}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}}
+h1{grid-column:1/-1;margin:0;font-size:2rem;display:flex;align-items:center;gap:14px;letter-spacing:.5px}
+.logo{width:84px;height:70px;flex:none}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+h2{margin:0 0 12px;font-size:1.1rem}
+.dial{position:relative;width:230px;height:230px;margin:6px auto 10px}
+.dial svg{width:100%;height:100%;transform:rotate(-90deg)}
+.dial .t{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.time{font-size:2.8rem;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
+.mode{color:var(--mute);font-size:.95rem}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 16px}
+button.p{background:var(--main);border-color:var(--main);color:var(--onmain);font-weight:600}
+button:hover{filter:brightness(.95)}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.set{display:flex;gap:12px;justify-content:center;margin-top:14px;font-size:.9rem;color:var(--mute)}
+.set input{width:64px}
+input{font:inherit;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.cur{text-align:center;color:var(--mute);min-height:1.6em;margin-bottom:4px}
+.today{text-align:center;margin-top:12px;font-size:.9rem;color:var(--mute)}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
+.nav b{font-size:1.05rem}
+.add{display:flex;gap:8px;margin-bottom:12px}
+.add input[type=text]{flex:1;min-width:0}
+.add input[type=number]{width:80px}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin:6px 0 14px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+li input[type=checkbox]{width:24px;height:24px;accent-color:var(--ok);cursor:pointer;flex:none}
+li .n{flex:1;cursor:pointer;min-width:0;word-break:break-word}
+li.done .n{text-decoration:line-through;color:var(--mute)}
+li small{color:var(--mute)}
+li .x{padding:2px 9px;color:var(--mute)}
+.empty{color:var(--mute);text-align:center;padding:18px 0}
+.msg{text-align:center;color:var(--ok);font-weight:600;min-height:1.6em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1><svg class="logo" viewBox="0 0 120 100" role="img" aria-label="كتب مدرسية">
+<ellipse cx="60" cy="95" rx="54" ry="4" fill="var(--line)"/>
+<rect x="8" y="72" width="104" height="22" rx="3" fill="#0f5b6b"/><rect x="16" y="76" width="92" height="14" rx="1.5" fill="#f4f1e6"/><rect x="8" y="72" width="8" height="22" rx="3" fill="#0b4552"/><rect x="40" y="81" width="40" height="3" rx="1.5" fill="#0f5b6b" opacity=".5"/>
+<rect x="18" y="52" width="92" height="20" rx="3" fill="#e0a030"/><rect x="26" y="56" width="80" height="12" rx="1.5" fill="#f4f1e6"/><rect x="18" y="52" width="8" height="20" rx="3" fill="#b9801c"/><rect x="48" y="61" width="34" height="3" rx="1.5" fill="#e0a030" opacity=".6"/>
+<rect x="12" y="34" width="96" height="18" rx="3" fill="#c0503a"/><rect x="20" y="38" width="84" height="10" rx="1.5" fill="#f4f1e6"/><rect x="12" y="34" width="8" height="18" rx="3" fill="#9a3a28"/>
+<g transform="rotate(-14 72 30)"><rect x="40" y="14" width="62" height="14" rx="3" fill="#2e8b57"/><rect x="46" y="17" width="52" height="8" rx="1.5" fill="#f4f1e6"/><rect x="40" y="14" width="7" height="14" rx="3" fill="#226b43"/></g>
+</svg><span>study</span></h1>
+
+<section aria-label="المؤقت">
+  <h2>مؤقت الدراسة</h2>
+  <div class="cur" id="cur">اضغط على اسم مادة لتبدأ بها</div>
+  <div class="dial">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="var(--line)" stroke-width="6"/><circle id="ring" cx="50" cy="50" r="45" fill="none" stroke="var(--main)" stroke-width="6" stroke-linecap="round" stroke-dasharray="282.74" stroke-dashoffset="0"/></svg>
+    <div class="t"><div class="time" id="time">25:00</div><div class="mode" id="mode">وقت الدراسة</div></div>
+  </div>
+  <div class="row">
+    <button class="p" id="go">ابدأ</button>
+    <button id="reset">إعادة</button>
+    <button id="swap">تبديل (دراسة / استراحة)</button>
+  </div>
+  <div class="set">
+    <label>الدراسة (دقيقة) <input type="number" id="sMin" min="1" max="180" value="25"></label>
+    <label>الاستراحة (دقيقة) <input type="number" id="bMin" min="1" max="60" value="5"></label>
+  </div>
+  <div class="today" id="stat"></div>
+</section>
+
+<section aria-label="الجدول">
+  <h2>جدول الدراسة</h2>
+  <div class="nav">
+    <button id="next" aria-label="اليوم التالي">▶</button>
+    <b id="dlabel"></b>
+    <button id="prev" aria-label="اليوم السابق">◀</button>
+  </div>
+  <div class="add">
+    <input type="text" id="name" placeholder="اسم المادة، مثال: رياضيات" maxlength="60">
+    <input type="number" id="mins" placeholder="دقائق" min="1" max="600" title="مدة الدراسة بالدقائق (اختياري)">
+    <button class="p" id="addBtn">إضافة</button>
+  </div>
+  <div class="row" style="justify-content:flex-start;margin-bottom:6px"><button id="copy">نسخ مواد اليوم السابق</button></div>
+  <div class="msg" id="msg"></div>
+  <div class="bar"><i id="fill"></i></div>
+  <ul id="list"></ul>
+</section>
+</div>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var KEY="studyApp.v1", S={tasks:{},studied:{},sMin:25,bMin:5};
+try{var r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function ds(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(x<10?"0":"")+x}
+var view=new Date(), todayStr=ds(new Date());
+
+/* ===== الجدول ===== */
+function day(){return S.tasks[ds(view)]||(S.tasks[ds(view)]=[])}
+function render(){
+  var t=day(), L=$("list"); L.innerHTML="";
+  var f=new Intl.DateTimeFormat("ar",{weekday:"long",day:"numeric",month:"long"}).format(view);
+  $("dlabel").textContent=f+(ds(view)===todayStr?" (اليوم)":"");
+  if(!t.length){L.innerHTML='<div class="empty">ما في مواد لهاليوم. أضف أول مادة من فوق.</div>'}
+  t.forEach(function(k,i){
+    var li=document.createElement("li"); if(k.done)li.className="done";
+    var c=document.createElement("input"); c.type="checkbox"; c.checked=k.done; c.setAttribute("aria-label","تمت دراسة "+k.name);
+    c.onchange=function(){k.done=c.checked;save();render();if(k.done&&t.every(function(z){return z.done}))$("msg").textContent="🎉 ممتاز! خلصت كل مواد اليوم";else $("msg").textContent=""};
+    var n=document.createElement("span"); n.className="n"; n.textContent=k.name; n.title="اضغط لتبدأ المؤقت بهذه المادة";
+    n.onclick=function(){curName=k.name;$("cur").textContent="تدرس الآن: "+k.name};
+    li.append(c,n);
+    if(k.mins){var m=document.createElement("small");m.textContent=k.mins+" د";li.append(m)}
+    var x=document.createElement("button"); x.className="x"; x.textContent="✕"; x.setAttribute("aria-label","حذف "+k.name);
+    x.onclick=function(){t.splice(i,1);save();render()};
+    li.append(x); L.append(li);
+  });
+  var d=t.filter(function(z){return z.done}).length;
+  $("fill").style.width=(t.length?d/t.length*100:0)+"%";
+  stat();
+}
+function add(){
+  var v=$("name").value.trim(); if(!v){$("name").focus();return}
+  day().push({name:v,mins:parseInt($("mins").value)||0,done:false});
+  $("name").value="";$("mins").value="";$("msg").textContent="";save();render();$("name").focus();
+}
+$("addBtn").onclick=add;
+$("name").onkeydown=function(e){if(e.key==="Enter")add()};
+$("prev").onclick=function(){view.setDate(view.getDate()-1);$("msg").textContent="";render()};
+$("next").onclick=function(){view.setDate(view.getDate()+1);$("msg").textContent="";render()};
+$("copy").onclick=function(){
+  var p=new Date(view);p.setDate(p.getDate()-1);
+  var src=S.tasks[ds(p)]||[];
+  if(!src.length){$("msg").textContent="ما في مواد في اليوم السابق";return}
+  src.forEach(function(k){day().push({name:k.name,mins:k.mins,done:false})});
+  $("msg").textContent="";save();render();
+};
+
+/* ===== المؤقت ===== */
+var curName="", study=true, running=false, endAt=0, left=0, tick=null, C=2*Math.PI*45;
+$("sMin").value=S.sMin; $("bMin").value=S.bMin;
+function total(){return (study?S.sMin:S.bMin)*60}
+function show(){
+  var s=Math.max(0,Math.ceil(left)), mm=Math.floor(s/60), ss=s%60;
+  var txt=(mm<10?"0":"")+mm+":"+(ss<10?"0":"")+ss;
+  $("time").textContent=txt; $("mode").textContent=study?"وقت الدراسة":"وقت الاستراحة";
+  $("ring").style.strokeDashoffset=C*(1-left/total());
+  $("ring").style.stroke=study?"var(--main)":"var(--acc)";
+  document.title=running?txt+" - study":"study";
+}
+function reset(){stop();left=total();show()}
+function stop(){running=false;clearInterval(tick);$("go").textContent="ابدأ"}
+function beep(){
+  try{var a=new (window.AudioContext||window.webkitAudioContext)();
+  [0,.35,.7].forEach(function(d){var o=a.createOscillator(),g=a.createGain();o.frequency.value=880;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.25,a.currentTime+d);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d+.28);o.start(a.currentTime+d);o.stop(a.currentTime+d+.3)})}catch(e){}
+}
+function finish(){
+  stop(); beep();
+  if(study){S.studied[todayStr]=(S.studied[todayStr]||0)+S.sMin;save();stat()}
+  study=!study; left=total(); show();
+  $("cur").textContent=study?"خلصت الاستراحة، يلا نكمل!":"أحسنت! خذ استراحة قصيرة";
+}
+function loop(){left=(endAt-Date.now())/1000; if(left<=0){left=0;show();finish();return} show()}
+$("go").onclick=function(){
+  if(running){left=(endAt-Date.now())/1000;stop();show();return}
+  if(left<=0)left=total();
+  endAt=Date.now()+left*1000;running=true;$("go").textContent="إيقاف مؤقت";
+  clearInterval(tick);tick=setInterval(loop,250);loop();
+};
+$("reset").onclick=reset;
+$("swap").onclick=function(){study=!study;reset()};
+function setMins(){
+  S.sMin=Math.min(180,Math.max(1,parseInt($("sMin").value)||25));
+  S.bMin=Math.min(60,Math.max(1,parseInt($("bMin").value)||5));
+  save(); if(!running)reset();
+}
+$("sMin").onchange=setMins; $("bMin").onchange=setMins;
+function stat(){
+  var m=S.studied[todayStr]||0, h=Math.floor(m/60), r=m%60;
+  $("stat").textContent="مجموع دراسة اليوم: "+(h?h+" ساعة و ":"")+r+" دقيقة";
+}
+reset(); render();
+})();
+</script>
+</body>
+</html>
